@@ -316,7 +316,7 @@ sock::readFromSocket(const unsigned socketFD)
 		}
 		std::cout << ">>>>> " << dt.getLocalTimestampStr();
 		std::cout << "  LEN: " << recvLen;
-		std::cout << ", BUFFER: " << recvBuff;
+		std::cout << ", BUFFER: " << recvBuff << std::endl;
 	}
 }
 
@@ -546,6 +546,7 @@ sock::createUDPServer()
 	struct sockaddr_in clientAddr; /* 用于记录发送方的地址信息 */
 	socklen_t addr_len;
 	int recv_cnt;
+	datime dt;
 
 	while (1) {
 		std::memset(buffer, 0, buff_size);
@@ -555,11 +556,12 @@ sock::createUDPServer()
 			std::cout << "udp recvfrom Failed!!!" << std::endl;
 			break;
 		}
-		std::cout << "length: " << recv_cnt << ", ";
-		std::cout << "buffer: " << buffer << std::endl;
+		std::cout << ">>>>> " << dt.getLocalTimestampStr();
+		std::cout << "  LEN: " << recv_cnt;
+		std::cout << ", BUFFER: " << buffer << std::endl;
 
 		// if (sendto(socketFD, buffer, BUFSIZ,
-		// 	   0, (struct sockaddr*)&clientAddr, addr_len) < 0) {
+		// 	   MSG_CONFIRM, (struct sockaddr*)&clientAddr, addr_len) < 0) {
 		// 	LOG_ERROR("ss", __FILE__, __LINE__, "udp sendto Failed!!!");
 		// 	break;
 		// }
